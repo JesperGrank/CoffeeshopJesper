@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <label for="coffeSort">Kaffesort
+    <select id="coffeSort">
+        <option value="0">Brygg kaffe - 20 kr</option>
+        <option value="1">Cappucino - 30 kr</option>
+        <option value="2">Latte - 40 kr</option>
+    </select>
+    </label>
+
+    <label>Antal
+        <input min="1" id="numberOfCoffees" type="number">
+    </label>
+
+    <button onClick="onBuyButtonClick()"> Köp </button>
+
+    <div>
+        Du har handlat för: <p id="totalvalue"> </p>
+        Medlemsskap: <p id="membership"> </p>
+    </div>
+
+    <h1>Dina transaktioner</h1> 
+   
+    <div id="root"></div>
+
+    <script>
+
+        class Customer {
+            constructor() {
+                this.transactions = []
+                
+                this.coffees = [
+                {name: 'Brygg Kaffe', price: 20},
+                {name: 'Cappucino', price: 30},
+                {name: 'Latte', price: 40}
+                ]
+                
+            }
+
+            amountOfCoffee(transactionsValue){
+                this.transactions.push(transactionsValue) // Pushes transactionsValue into "this.transactions"
+            }
+
+            coffeeSum(){ 
+                let sum = 0
+                this.transactions.forEach(function (transaction) {
+                    sum += transaction
+                })
+                return sum
+            }
+
+            totalCups(numberOfCoffees){
+                return totalCups += numberOfCoffees
+            }
+
+            membership(numberOfCoffees){
+                if(numberOfCoffees < 10){
+                    return "Brons"
+                } else if(numberOfCoffees >= 10 && numberOfCoffees < 30){
+                    return "Silver"
+                } else if(numberOfCoffees >= 30){
+                    return "Guld"
+                }
+            }
+
+            }
+
+        let totalCups = 0
+        const customer1 = new Customer()
+        
+        function onBuyButtonClick(){
+            
+            
+            const option = document.getElementById("coffeSort").value // Returns the value with id coffeeSort 
+            const numberOfCoffees = parseInt(document.getElementById("numberOfCoffees").value) // Converts the string input to an int(number)
+
+            let kindOfCoffee = customer1.coffees[option].name // Returns the objects "name" variable from coffees array
+            let coffeePrice = customer1.coffees[option].price // Returns the objects "price" variable from coffees array
+
+            const transactionValue = coffeePrice * numberOfCoffees
+
+            customer1.amountOfCoffee(transactionValue) // Calls customer1's method amountOfCoffee with transactionValue as parameter
+
+            
+            const totalValue = document.getElementById("totalvalue")
+            totalValue.innerHTML = `${customer1.coffeeSum()} kr` // The return from coffeeSum method will be totalValues innerHTML (sum of coffees)
+            
+            let totalCups = customer1.totalCups(numberOfCoffees) 
+
+            const membership = document.getElementById("membership")
+            membership.innerHTML = `${customer1.membership(totalCups)}` // Sets the membership <p> to Brons, Silver or Guld depending on how many bought
+
+            /* Message output for the amount of coffee, what kind of coffee, price per coffee and the total value */
+            const parent = document.getElementById("root")
+            const messageOutput = document.createElement("p")
+            messageOutput.innerHTML = `Du köpte ${numberOfCoffees} st ${kindOfCoffee} för ${coffeePrice} kr styck. Summa: ${transactionValue} `
+            parent.appendChild(messageOutput)
+        }
+
+        
+        
+
+    </script>
+
+</body>
+</html>
